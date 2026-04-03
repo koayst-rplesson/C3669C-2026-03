@@ -1,25 +1,34 @@
 import gradio as gr
 
-from transformers import pipeline
+from transformers import AutoModelForQuestionAnswering, AutoTokenizer
 
-model_name = "deepset/roberta-base-squad2"
-
-nlp = pipeline(
-   'question-answering', 
-    model=model_name, 
-    tokenizer=model_name
-)
+model_name = "bert-large-uncased-whole-word-masking-finetuned-squad"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForQuestionAnswering.from_pretrained(model_name)
 
 def generate_answer(question, context):
     QA_Input = {
         'question': question,
         'context': context      
     }
+   
+    inputs = tokenizer(question, context, return_tensors="pt")
 
-    response = nlp(question=question, context=context)
-    result = response['answer']
+    outputs = model(**inputs)
 
-    return result
+    # extract the start and end scores
+    start_scores = outputs.start_logits
+    end_scores = outputs.end_logits
+
+    # get the most likely start and end positions
+    start_index = start_scores.argmax()
+    end_index = end_scores.argmax()
+
+    # convert token IDs back to words
+    answer_tokens = inputs["input_ids"][0][start_index : end_index + 1]
+    answer = tokenizer.decode(answer_tokens, skip_special_tokens = True)
+
+    return answer
 
 iface = gr.Interface(
     fn=generate_answer, 
