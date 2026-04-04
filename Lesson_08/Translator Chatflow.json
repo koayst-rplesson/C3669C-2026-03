@@ -1,0 +1,517 @@
+{
+  "nodes": [
+    {
+      "id": "llmChain_0",
+      "position": {
+        "x": 1030.3468361574448,
+        "y": 115.66255124709488
+      },
+      "type": "customNode",
+      "data": {
+        "id": "llmChain_0",
+        "label": "LLM Chain",
+        "version": 3,
+        "name": "llmChain",
+        "type": "LLMChain",
+        "baseClasses": [
+          "LLMChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "Chain to run queries against LLMs",
+        "inputParams": [
+          {
+            "label": "Chain Name",
+            "name": "chainName",
+            "type": "string",
+            "placeholder": "Name Your Chain",
+            "optional": true,
+            "id": "llmChain_0-input-chainName-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Language Model",
+            "name": "model",
+            "type": "BaseLanguageModel",
+            "id": "llmChain_0-input-model-BaseLanguageModel",
+            "display": true
+          },
+          {
+            "label": "Prompt",
+            "name": "prompt",
+            "type": "BasePromptTemplate",
+            "id": "llmChain_0-input-prompt-BasePromptTemplate",
+            "display": true
+          },
+          {
+            "label": "Output Parser",
+            "name": "outputParser",
+            "type": "BaseLLMOutputParser",
+            "optional": true,
+            "id": "llmChain_0-input-outputParser-BaseLLMOutputParser",
+            "display": true
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "llmChain_0-input-inputModeration-Moderation",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "model": "{{chatOpenAI_0.data.instance}}",
+          "prompt": "{{chatPromptTemplate_0.data.instance}}",
+          "outputParser": "",
+          "inputModeration": "",
+          "chainName": "Translator"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "llmChain_0-output-llmChain-LLMChain|BaseChain|Runnable",
+                "name": "llmChain",
+                "label": "LLM Chain",
+                "description": "",
+                "type": "LLMChain | BaseChain | Runnable"
+              },
+              {
+                "id": "llmChain_0-output-outputPrediction-string|json",
+                "name": "outputPrediction",
+                "label": "Output Prediction",
+                "description": "",
+                "type": "string | json"
+              }
+            ],
+            "default": "llmChain"
+          }
+        ],
+        "outputs": {
+          "output": "llmChain"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 514,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1030.3468361574448,
+        "y": 115.66255124709488
+      }
+    },
+    {
+      "id": "chatOpenAI_0",
+      "position": {
+        "x": 282.02544727706396,
+        "y": 121.08946135054498
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatOpenAI_0",
+        "label": "OpenAI",
+        "version": 8.3,
+        "name": "chatOpenAI",
+        "type": "ChatOpenAI",
+        "baseClasses": [
+          "ChatOpenAI",
+          "BaseChatOpenAI",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around OpenAI large language models that use the Chat endpoint",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "openAIApi"
+            ],
+            "id": "chatOpenAI_0-input-credential-credential",
+            "display": true
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "asyncOptions",
+            "loadMethod": "listModels",
+            "default": "gpt-4o-mini",
+            "id": "chatOpenAI_0-input-modelName-asyncOptions",
+            "display": true
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatOpenAI_0-input-temperature-number",
+            "display": true
+          },
+          {
+            "label": "Streaming",
+            "name": "streaming",
+            "type": "boolean",
+            "default": true,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-streaming-boolean",
+            "display": true
+          },
+          {
+            "label": "Allow Image Uploads",
+            "name": "allowImageUploads",
+            "type": "boolean",
+            "description": "Allow image input. Refer to the <a href=\"https://docs.flowiseai.com/using-flowise/uploads#image\" target=\"_blank\">docs</a> for more details.",
+            "default": false,
+            "optional": true,
+            "id": "chatOpenAI_0-input-allowImageUploads-boolean",
+            "display": true
+          },
+          {
+            "label": "Reasoning",
+            "description": "Whether the model supports reasoning. Only applicable for reasoning models (gpt-5 and o-series models only)",
+            "name": "reasoning",
+            "type": "boolean",
+            "default": false,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-reasoning-boolean",
+            "display": true
+          },
+          {
+            "label": "Reasoning Effort",
+            "description": "Constrains effort on reasoning. Only applicable for reasoning models (gpt-5 and o-series models only)",
+            "name": "reasoningEffort",
+            "type": "options",
+            "options": [
+              {
+                "label": "Low",
+                "name": "low"
+              },
+              {
+                "label": "Medium",
+                "name": "medium"
+              },
+              {
+                "label": "High",
+                "name": "high"
+              },
+              {
+                "label": "X-High",
+                "name": "xhigh",
+                "description": "X-High is supported for all models after gpt-5.1-codex-max"
+              }
+            ],
+            "additionalParams": true,
+            "show": {
+              "reasoning": true
+            },
+            "id": "chatOpenAI_0-input-reasoningEffort-options",
+            "display": false
+          },
+          {
+            "label": "Reasoning Summary",
+            "description": "A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process",
+            "name": "reasoningSummary",
+            "type": "options",
+            "options": [
+              {
+                "label": "Auto",
+                "name": "auto"
+              },
+              {
+                "label": "Concise",
+                "name": "concise"
+              },
+              {
+                "label": "Detailed",
+                "name": "detailed"
+              }
+            ],
+            "additionalParams": true,
+            "show": {
+              "reasoning": true
+            },
+            "id": "chatOpenAI_0-input-reasoningSummary-options",
+            "display": false
+          },
+          {
+            "label": "Max Tokens",
+            "name": "maxTokens",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-maxTokens-number",
+            "display": true
+          },
+          {
+            "label": "Top Probability",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-topP-number",
+            "display": true
+          },
+          {
+            "label": "Frequency Penalty",
+            "name": "frequencyPenalty",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-frequencyPenalty-number",
+            "display": true
+          },
+          {
+            "label": "Presence Penalty",
+            "name": "presencePenalty",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-presencePenalty-number",
+            "display": true
+          },
+          {
+            "label": "Timeout",
+            "name": "timeout",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-timeout-number",
+            "display": true
+          },
+          {
+            "label": "Strict Tool Calling",
+            "name": "strictToolCalling",
+            "type": "boolean",
+            "description": "Whether the model supports the `strict` argument when passing in tools. If not specified, the `strict` argument will not be passed to OpenAI.",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-strictToolCalling-boolean",
+            "display": true
+          },
+          {
+            "label": "Stop Sequence",
+            "name": "stopSequence",
+            "type": "string",
+            "rows": 4,
+            "optional": true,
+            "description": "List of stop words to use when generating. Use comma to separate multiple stop words.",
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-stopSequence-string",
+            "display": true
+          },
+          {
+            "label": "Base Path",
+            "name": "basepath",
+            "type": "string",
+            "optional": true,
+            "description": "Override the default base URL for the API, e.g., \"https://api.example.com/v2/",
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-basepath-string",
+            "display": true
+          },
+          {
+            "label": "Base Options",
+            "name": "baseOptions",
+            "type": "json",
+            "optional": true,
+            "description": "Default headers to include with every request to the API.",
+            "additionalParams": true,
+            "id": "chatOpenAI_0-input-baseOptions-json",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatOpenAI_0-input-cache-BaseCache",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "gpt-3.5-turbo",
+          "temperature": "0.6",
+          "streaming": true,
+          "allowImageUploads": "",
+          "reasoning": "",
+          "reasoningEffort": "",
+          "reasoningSummary": "",
+          "maxTokens": "256",
+          "topP": "1",
+          "frequencyPenalty": "0",
+          "presencePenalty": "0",
+          "timeout": "",
+          "strictToolCalling": "",
+          "stopSequence": "",
+          "basepath": "",
+          "baseOptions": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatOpenAI",
+            "label": "ChatOpenAI",
+            "description": "Wrapper around OpenAI large language models that use the Chat endpoint",
+            "type": "ChatOpenAI | BaseChatOpenAI | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 676,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 282.02544727706396,
+        "y": 121.08946135054498
+      },
+      "dragging": false
+    },
+    {
+      "id": "chatPromptTemplate_0",
+      "position": {
+        "x": 637.1950900362959,
+        "y": 116.13015896706443
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatPromptTemplate_0",
+        "label": "Chat Prompt Template",
+        "version": 2,
+        "name": "chatPromptTemplate",
+        "type": "ChatPromptTemplate",
+        "baseClasses": [
+          "ChatPromptTemplate",
+          "BaseChatPromptTemplate",
+          "BasePromptTemplate",
+          "Runnable"
+        ],
+        "category": "Prompts",
+        "description": "Schema to represent a chat prompt",
+        "inputParams": [
+          {
+            "label": "System Message",
+            "name": "systemMessagePrompt",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "You are a helpful assistant that translates {input_language} to {output_language}.",
+            "id": "chatPromptTemplate_0-input-systemMessagePrompt-string",
+            "display": true
+          },
+          {
+            "label": "Human Message",
+            "name": "humanMessagePrompt",
+            "description": "This prompt will be added at the end of the messages as human message",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "{text}",
+            "id": "chatPromptTemplate_0-input-humanMessagePrompt-string",
+            "display": true
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "chatPromptTemplate_0-input-promptValues-json",
+            "display": true
+          },
+          {
+            "label": "Messages History",
+            "name": "messageHistory",
+            "description": "Add messages after System Message. This is useful when you want to provide few shot examples",
+            "type": "tabs",
+            "tabIdentifier": "selectedMessagesTab",
+            "additionalParams": true,
+            "default": "messageHistoryCode",
+            "tabs": [
+              {
+                "label": "Add Messages (Code)",
+                "name": "messageHistoryCode",
+                "type": "code",
+                "hideCodeExecute": true,
+                "codeExample": "const { AIMessage, HumanMessage, ToolMessage } = require('@langchain/core/messages');\n\nreturn [\n    new HumanMessage(\"What is 333382 🦜 1932?\"),\n    new AIMessage({\n        content: \"\",\n        tool_calls: [\n        {\n            id: \"12345\",\n            name: \"calculator\",\n            args: {\n                number1: 333382,\n                number2: 1932,\n                operation: \"divide\",\n            },\n        },\n        ],\n    }),\n    new ToolMessage({\n        tool_call_id: \"12345\",\n        content: \"The answer is 172.558.\",\n    }),\n    new AIMessage(\"The answer is 172.558.\"),\n]",
+                "optional": true,
+                "additionalParams": true
+              }
+            ],
+            "id": "chatPromptTemplate_0-input-messageHistory-tabs",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "systemMessagePrompt": "You are a helpful, friendly and bilingual assistant. You will be asked for assistance in {input language}. You are to provide two responses. One paragraph in {output language} and the other paragraph in {input language}.",
+          "humanMessagePrompt": "{text}",
+          "promptValues": "{\"input language\":\"English\",\"output language\":\"Japanese\",\"text\":\"{{question}}\"}",
+          "messageHistory": "messageHistoryCode"
+        },
+        "outputAnchors": [
+          {
+            "id": "chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable",
+            "name": "chatPromptTemplate",
+            "label": "ChatPromptTemplate",
+            "description": "Schema to represent a chat prompt",
+            "type": "ChatPromptTemplate | BaseChatPromptTemplate | BasePromptTemplate | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 748,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 637.1950900362959,
+        "y": 116.13015896706443
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "chatOpenAI_0",
+      "sourceHandle": "chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "llmChain_0",
+      "targetHandle": "llmChain_0-input-model-BaseLanguageModel",
+      "type": "buttonedge",
+      "id": "chatOpenAI_0-chatOpenAI_0-output-chatOpenAI-ChatOpenAI|BaseChatOpenAI|BaseChatModel|BaseLanguageModel|Runnable-llmChain_0-llmChain_0-input-model-BaseLanguageModel"
+    },
+    {
+      "source": "chatPromptTemplate_0",
+      "sourceHandle": "chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable",
+      "target": "llmChain_0",
+      "targetHandle": "llmChain_0-input-prompt-BasePromptTemplate",
+      "type": "buttonedge",
+      "id": "chatPromptTemplate_0-chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable-llmChain_0-llmChain_0-input-prompt-BasePromptTemplate"
+    }
+  ]
+}
