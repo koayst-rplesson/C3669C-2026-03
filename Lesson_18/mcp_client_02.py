@@ -21,7 +21,7 @@ pp = pprint.PrettyPrinter(indent=2, width=100)
 
 async def main():
    transport = StreamableHttpTransport(url = SERVER_URL)
-   client = Client(transport)
+   client = Client(transport, auth="fmcp_5Go_YOUR API KEY")
 
    print("\n🚀 Connecting to FastMCP server at:", SERVER_URL)
 
